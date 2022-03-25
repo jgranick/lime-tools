@@ -7,7 +7,6 @@ import haxe.Serializer;
 import haxe.Unserializer;
 import haxe.rtti.Meta;
 import hxp.*;
-import lime.system.CFFI;
 import lime.tools.HXProject;
 import lime.tools.*;
 import sys.io.File;
@@ -17,6 +16,10 @@ import utils.publish.*;
 import utils.CreateTemplate;
 import utils.JavaExternGenerator;
 import utils.PlatformSetup;
+
+#if lime
+import lime.system.CFFI;
+#end
 
 @:access(lime.tools.HXProject)
 class CommandLineTools
@@ -419,6 +422,7 @@ class CommandLineTools
 	{
 		var args = Sys.args();
 
+		#if lime
 		if (args.length > 0 && args[0].toLowerCase() == "rebuild")
 		{
 			CFFI.enabled = false;
@@ -433,6 +437,7 @@ class CommandLineTools
 				CFFI.enabled = false;
 			}
 		}
+		#end
 
 		var path = "";
 
@@ -472,6 +477,7 @@ class CommandLineTools
 			case WINDOWS:
 				// var is64 = neko.Lib.load("std", "sys_is64", 0)();
 				untyped $loader.path = $array(path + "Windows/", $loader.path);
+				#if lime
 				if (CFFI.enabled)
 				{
 					try
@@ -483,6 +489,7 @@ class CommandLineTools
 						untyped $loader.path = $array(path + "Windows64/", $loader.path);
 					}
 				}
+				#end
 
 			case MAC:
 				// if (System.hostArchitecture == X64) {

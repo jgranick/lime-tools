@@ -1,20 +1,22 @@
 package lime.tools;
 
-#if lime
+import haxe.crypto.Base64;
 import haxe.io.Bytes as HaxeBytes;
 import haxe.Serializer;
 import haxe.Unserializer;
 import hxp.*;
-import lime._internal.format.Base64;
+import lime.tools.AssetManifest;
 import lime.tools.AssetType;
 import lime.tools.Asset;
 import lime.tools.HXProject;
 import lime.tools.Library;
-import lime.utils.AssetManifest;
-import lime.utils.Bytes;
 import sys.io.File;
 import sys.io.FileOutput;
 import sys.FileSystem;
+
+#if lime
+import lime.utils.Bytes;
+#end
 
 class AssetHelper
 {
@@ -287,6 +289,8 @@ class AssetHelper
 	private static function getPackedAssetData(project:HXProject, output:FileOutput, pathGroups:Map<String, Array<String>>, libraries:Map<String, Library>,
 			library:Library, asset:Asset):Dynamic
 	{
+		// TODO: Support compression without liblime.ndll?
+		#if lime
 		if (project.target == HTML5 && (asset.type == MUSIC || asset.type == SOUND || asset.type == FONT))
 		{
 			return getAssetData(project, pathGroups, libraries, library.name, asset);
@@ -386,6 +390,9 @@ class AssetHelper
 		{
 			return null;
 		}
+		#else
+		return null;
+		#end
 	}
 
 	private static function isPackedLibrary(project:HXProject, library:Library)
@@ -710,4 +717,3 @@ class AssetHelper
 		}
 	}
 }
-#end

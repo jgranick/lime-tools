@@ -1411,8 +1411,8 @@ class ProjectXMLParser extends HXProject
 									case "Int":
 										value = Std.parseInt(stringValue);
 									case "RGB":
-										var rgb:lime.math.ARGB = Std.parseInt(stringValue);
-										value = {r: rgb.r / 255, g: rgb.g / 255, b: rgb.b / 255};
+										var argb = Std.parseInt(stringValue);
+										value = {r: ((argb >> 16) & 0xFF) / 255, g: ((argb >> 8) & 0xFF) / 255, b: (argb & 0xFF) / 255};
 									case "String":
 										value = stringValue;
 									default:

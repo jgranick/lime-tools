@@ -2,9 +2,9 @@ package lime.tools;
 
 // import openfl.text.Font;
 // import openfl.utils.ByteArray;
+import haxe.crypto.Base64;
 import haxe.io.Bytes;
 import hxp.*;
-import lime._internal.format.Base64;
 import lime.tools.Asset;
 import lime.tools.AssetEncoding;
 import lime.tools.AssetType;
